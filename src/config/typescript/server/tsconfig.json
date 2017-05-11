@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "outDir": "<rootDir>/build",
+    "target":"es6",
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "preserveConstEnums": true,
+    "sourceMap": false,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "allowJs": true
+  },
+  "include": [
+    "../../../server/**/*.ts"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "outDir": "../../../build",
+    "target":"es6",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "module": "commonjs",
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "allowJs": true
+  },
+  "include": [
+    "../../../client/**/*.ts",
+    "../../../client/**/*.tsx",
+    "../../../../node_modules/@types/**/*.d.ts",
+    "../../../types/**/*.d.ts"
+  ],
+  "awesomeTypescriptLoaderOptions": {
+    "silent": true,
+    "useBabel": true,
+    "useCache": true,
+    "babelOptions": {
+      "babelrc": false,
+      "presets": [
+        ["env", {
+          "targets": {
+            "browsers": ["last 2 versions", "ie 11"]
+          },
+          "modules": false,
+          "useBuiltIns": true
+        }],
+        "react"
+      ],
+      "env": {
+        "development": {
+          "plugins": [
+            "react-hot-loader/babel"
+          ]
+        }
+      }
+    }
+  }
+}
