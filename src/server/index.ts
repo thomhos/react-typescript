@@ -1,6 +1,6 @@
-import * as path from 'path'
 import * as express from 'express'
-import { logError, logAppStarted } from './logger'
+import * as path from 'path'
+import { logAppStarted, logError } from './logger'
 import { setupFrontend } from './middlewares/frontend'
 
 const isDev: boolean        = process.env.NODE_ENV !== 'production'
@@ -23,7 +23,9 @@ setupFrontend(app, {
  */
 function appStartCallback(err: Error): void {
     /* Log errror if we get one */
-    if (err) return logError(err.message)
+    if (err) {
+        return logError(err.message)
+    }
 
     logAppStarted(port, prettyHost)
 }

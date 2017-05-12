@@ -1,11 +1,11 @@
-import * as path from 'path'
-import * as Express from 'express'
 import * as Compression from 'compression'
+import * as Express from 'express'
+import * as path from 'path'
 import * as Webpack from 'webpack'
 import * as WebpackDevMiddleware from 'webpack-dev-middleware'
 import * as WebpackHotMiddleware from 'webpack-hot-middleware'
 
-import { Server } from '../../types';
+import { Server } from '../../types'
 
 /**
  * Add the dev middleware
@@ -49,15 +49,14 @@ function addProdMiddlewares(app: Express.Application, options: Server.FrontendPr
     app.get('*', (req, res) => res.sendFile(path.resolve(outputPath, 'index.html')))
 }
 
-
 /**
  * Front-end middleware
  */
 export function setupFrontend(app: Express.Application, options: Server.FrontendProdOptions): Express.Application {
-    const isProd = process.env.NODE_ENV === 'production';
+    const isProd = process.env.NODE_ENV === 'production'
 
     if (isProd) {
-        addProdMiddlewares(app, options);
+        addProdMiddlewares(app, options)
     } else {
         const webpackConfig: Webpack.Configuration = require('../../config/webpack/webpack.dev.babel.js')
         addDevMiddlewares(app, webpackConfig)

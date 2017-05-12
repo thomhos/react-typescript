@@ -1,9 +1,9 @@
 import 'babel-polyfill'
 import * as React from 'react'
-import { Provider } from "react-redux";
-import { configureStore } from './redux/create'
 import { render } from 'react-dom'
+import { Provider } from "react-redux"
 import { App } from './containers'
+import { configureStore } from './redux/create'
 
 const store = configureStore()
 
@@ -14,5 +14,5 @@ render(
     <Provider store={store}>
         <App />
     </Provider>,
-    document.getElementById('app')
+    document.getElementById('app'),
 )

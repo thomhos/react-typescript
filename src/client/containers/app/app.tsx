@@ -1,10 +1,26 @@
 import * as React from 'react'
-import { bindActionCreators, Dispatch, ActionCreator } from 'redux'
 import { connect } from 'react-redux'
+import { ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { State } from '../../../types'
 import { actions as weatherActions, Weather } from '../../redux/modules/weather'
 
-class App extends React.Component<ComponentProps, any>{
+/**
+ * Types
+ */
+interface StateProps {
+    weather: State.WeatherStateRecord
+}
+
+interface DispatchProps {
+    requestForLocation: ActionCreator<Weather.Action>
+}
+
+type ComponentProps = StateProps & DispatchProps
+
+/**
+ * Class
+ */
+class App extends React.Component<ComponentProps, any> {
     private componentWillMount() {
         this.props.requestForLocation("home")
     }
@@ -16,16 +32,9 @@ class App extends React.Component<ComponentProps, any>{
     }
 }
 
-interface StateProps {
-    weather: State.WeatherStateRecord
-}
-
-interface DispatchProps {
-    requestForLocation: ActionCreator<Weather.Action>
-}
-
-type ComponentProps = StateProps & DispatchProps
-
+/**
+ * Connect
+ */
 function mapStateToProps(state: State.Root): StateProps {
     return { weather: state.get('weather') }
 }

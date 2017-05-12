@@ -1,13 +1,14 @@
 import Redux from 'redux'
 import { State } from '../../../../types'
 
+// tslint:disable-next-line:no-namespace
 export namespace Weather {
     export type REQUEST_FOR_LOCATION = 'weather_REQUEST_FOR_LOCATION'
 
-   export interface requestForLocation extends Redux.Action {
+    export interface RequestForLocation extends Redux.Action {
         type: REQUEST_FOR_LOCATION
         payload: string
     }
 
-   export type Action = requestForLocation
+    export type Action = RequestForLocation
 }

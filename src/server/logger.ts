@@ -4,8 +4,8 @@
  * Has a few methods to log information.
  */
 
-import * as express from "express"
 import * as chalk from "chalk"
+import * as express from "express"
 import * as ip from "ip"
 
 const divider = chalk.gray("\n-----------------------------------")

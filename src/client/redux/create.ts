@@ -1,11 +1,11 @@
-import { createStore, applyMiddleware, compose, Middleware, Store } from 'redux'
+import { applyMiddleware, compose, createStore, Middleware, Store } from 'redux'
 import logger from 'redux-logger'
+import { State } from '../../types'
 import { history } from './history'
 import { rootReducer } from './reducer'
-import { State } from '../../types'
 
 /* TODO: Fix this! */
-declare var window: any;
+declare var window: any
 
 export function configureStore(): Store<State.Root> {
     /**
@@ -21,7 +21,7 @@ export function configureStore(): Store<State.Root> {
     /**
      * Create the store
      */
-    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
     const store = createStore(rootReducer, composeEnhancers(
         applyMiddleware(...middlewares),
     ))
