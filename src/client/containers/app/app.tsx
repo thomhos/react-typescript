@@ -27,7 +27,7 @@ class App extends React.Component<ComponentProps, any> {
 
     public render() {
         return (
-            <h1>Hello {this.props.weather.get('location')}</h1>
+            <h1>Hello at {this.props.weather.get('location')}</h1>
         )
     }
 }
