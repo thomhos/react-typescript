@@ -7,7 +7,7 @@ import { rootReducer } from './reducer'
 /* TODO: Fix this! */
 declare var window: any
 
-export function configureStore(): Store<State.Root> {
+export function configureStore(defaultState?: State.RootState): Store<State.RootState> {
     /**
      * Connect the middlewares
      */
@@ -21,8 +21,8 @@ export function configureStore(): Store<State.Root> {
     /**
      * Create the store
      */
-    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-    const store = createStore(rootReducer, composeEnhancers(
+    const composeEnhancers = compose
+    const store = createStore(rootReducer, defaultState, composeEnhancers(
         applyMiddleware(...middlewares),
     ))
 

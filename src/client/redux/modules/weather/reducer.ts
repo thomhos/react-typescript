@@ -6,18 +6,16 @@ import { ActionNames } from './actions'
 const defaultState: State.WeatherState = {
   location: '',
 }
-const makeDefaultStateRecord = makeTypedFactory<State.WeatherState, State.WeatherStateRecord>(defaultState)
-
 function reducer(
-  state: State.WeatherStateRecord = makeDefaultStateRecord(),
+  state: State.WeatherState = defaultState,
   action: WeatherActionTypes.Action,
-): State.WeatherStateRecord {
+): State.WeatherState {
 
   switch (action.type) {
 
     case ActionNames.REQUEST_FOR_LOCATION:
       const { payload: location } = action
-      return state.set('location', location)
+      return { location }
 
     default:
       return state

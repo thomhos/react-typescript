@@ -1,36 +1,33 @@
 import * as express from 'express'
+import { Server as HttpServer } from 'http'
 import * as path from 'path'
-import { logAppStarted, logError } from './logger'
-import { setupFrontend } from './middlewares/frontend'
+import { ServerConfig } from '../../config'
+import { Server } from '../types'
 
-const isDev: boolean        = process.env.NODE_ENV !== 'production'
-const customHost: string    = process.env.HOST
-const host: string          = customHost || null // Let http.Server use its default IPv6/4 host
-const prettyHost: string    = customHost || 'localhost'
-const port: number          = process.env.PORT || 3000
-const app                   = express()
+import { render } from './middleware'
 
 /**
- * Connect the frontend middleware
+ * Isomorphic webpack uses this function to create the server
+ * The build result is passed as params.
  */
-setupFrontend(app, {
-    outputPath: path.resolve(process.cwd(), 'build/public'),
-    publicPath: '/',
-})
+export default function(params: Server.IsomorphicWebpackParams): HttpServer {
 
-/**
- * Define start callback function (to do some informational logging)
- */
-function appStartCallback(err: Error): void {
-    /* Log errror if we get one */
-    if (err) {
-        return logError(err.message)
-    }
+    /**
+     * Get ENV settings
+     */
+    const isProd = process.env.NODE_ENV === 'production'
+    const port = isProd ? ServerConfig.prod.port : ServerConfig.dev.port
 
-    logAppStarted(port, prettyHost)
+    /**
+     * Set the app up
+     */
+    const app: express.Express = express()
+
+    app.set('port', port)
+    app.use('/static', express.static(path.join(__dirname, 'static')))
+    app.get('*', render(params.chunks()))
+
+    return app.listen(app.get('port'), () => {
+        console.info('Server started on', app.get('port'))
+    })
 }
-
-/**
- * Start listening!
- */
-app.listen(port, host, appStartCallback)

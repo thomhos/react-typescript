@@ -11,7 +11,7 @@ export namespace State {
     type Root = RootRecord & Reducer<RootState>
 
     interface RootState {
-        weather: WeatherStateRecord
+        weather: WeatherState
     }
 
     interface RootRecord extends TypedRecord<RootRecord>, RootState {}

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "../../../build",
-    "target":"es6",
+    "target":"es2015",
     "moduleResolution": "node",
     "jsx": "react",
     "module": "commonjs",
@@ -33,13 +33,9 @@
         }],
         "react"
       ],
-      "env": {
-        "development": {
-          "plugins": [
-            "react-hot-loader/babel"
-          ]
-        }
-      }
+      "plugins": [
+        "add-module-exports"
+      ]
     }
   }
 }

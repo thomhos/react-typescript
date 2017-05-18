@@ -3,24 +3,40 @@ import { Configuration as WebpackConfiguration } from 'webpack'
 import { WebpackDevMiddleware } from 'webpack-dev-middleware'
 import { NextHandleFunction } from "connect"
 
-export namespace Server {    
-    
-    type FrontendDevMiddleware = WebpackDevMiddleware & NextHandleFunction & FakeFileSystem
+export namespace Server {
 
-    interface FrontendProdOptions {
-        publicPath: string;
-        outputPath: string;
+    interface ServerConfig {
+        host: string
+        port: number
     }
 
-    interface FakeFileSystem {
-        fileSystem: {
-            readFile: (path: string, callback: (err: Error, file: string) => void) => void
-        }
+    interface Config {
+        dev: ServerConfig,
+        prod: ServerConfig
     }
 
-    interface Logger {
-        error: (err: string) => void;
-        appStarted: (port: number, host: string, tunnelStarted: string) => void;
+
+    interface IsomorphicStyleChunk {
+        application: string;
+    }
+
+    interface IsomorphicJavascriptChunk {
+        app: string;
+        common: string;
+    }
+
+    interface IsomorphicChunks {
+        styles: IsomorphicStyleChunk;
+        javascript: IsomorphicJavascriptChunk;
+    }
+
+    interface IsomorphicWebpackParams {
+        chunks: () => IsomorphicChunks;
+    }
+
+    interface IsomorphicRenderProps {
+        components: any[];
+        params: any;
     }
 
 }
