@@ -40,6 +40,14 @@ const deveConfig: webpack.Configuration = {
         ],
     },
 
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('development'),
+            },
+        }),
+    ],
+
     /**
      * The output path of the bundle will be on the port of the dev server
      * The paths in the rendered HTML will point to the dev server.

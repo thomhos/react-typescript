@@ -13,7 +13,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-    requestForLocation: ActionCreator<Weather.Action>
+    requestWeatherForLocation: ActionCreator<Weather.Action>
 }
 
 type ComponentProps = StateProps & DispatchProps & RouteComponentProps<any>
@@ -23,13 +23,18 @@ type ComponentProps = StateProps & DispatchProps & RouteComponentProps<any>
  */
 class App extends React.Component<ComponentProps, any> {
     private componentWillMount() {
-        // this.props.requestForLocation("home")
+        const loc = this.props.match.params.location
+
+        if (!this.props.weather.location[loc]) {
+            console.log('havent got that city m8')
+            this.props.requestWeatherForLocation(loc)
+        }
     }
 
     public render() {
-        console.log(this.props)
+        const route = this.props.match.params.location
         return (
-            <h1>Hello at {this.props.weather.location}</h1>
+            <h1>Hello at {route}</h1>
         )
     }
 }

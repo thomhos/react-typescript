@@ -9,7 +9,7 @@ import { configureStore, history } from './redux'
 import Routes from './routes'
 
 const initialState: State.RootState = (window as any).__INITIAL_STATE__ || {}
-const store = configureStore(initialState)
+const store = configureStore(initialState, history)
 
 /**
  * Render the app!!

@@ -5,7 +5,7 @@ import { ServerConfig } from '../config'
 import getConfig from '../config/webpack/config'
 
 const port = ServerConfig.dev.port + 1
-const webpackConfig = getConfig('dev:client')
+const webpackConfig = getConfig('development:client')
 const compiler = webpack(webpackConfig)
 const devServerOptions = {
     quiet: true,
