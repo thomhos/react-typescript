@@ -5,6 +5,7 @@ import { App } from '../containers'
 
 const Routes = ({ location }: RouteComponentProps<any>) => (
     <Switch location={location}>
+        <Route key='/' path='/' component={App} exact={true} />
         <Route key='/:location' path='/:location' component={App} />
     </Switch>
 )
