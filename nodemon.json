@@ -5,7 +5,7 @@
     "node_modules/"
   ],
   "watch": [
-    "build/**/*",
+    "build/**/*.js",
     "config/webpack/*"
   ]
 }

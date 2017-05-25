@@ -1,3 +1,4 @@
+import * as Immutable from 'immutable'
 import { Store } from 'redux'
 import { TypedRecord } from 'typed-immutable-record'
 
@@ -8,19 +9,21 @@ export namespace State {
      *  Because our rootState doesn't have a set method we get an error.
      *  Immutable Record extends Immutable Map so we can safely use it this way as they have identical methods.
      */
-    interface CustomStore extends Store<RootState> {
+    interface CustomStore extends Store<RootStateRecord> {
         run: any
         close: any
     }
+    
+    interface RootStateRecord extends TypedRecord<RootStateRecord>, RootState {}
 
     interface RootState {
         weather: WeatherState
     }
 
+    interface WeatherStateRecord extends TypedRecord<WeatherStateRecord>, WeatherState {}
+
     interface WeatherState {
-        location: {
-            [key: string]: WeatherObject
-        }
+        location: Immutable.Map<string, WeatherObject>
     }
 
     interface WeatherObject {

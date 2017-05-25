@@ -19,6 +19,11 @@ export default function(params: Server.IsomorphicWebpackParams): HttpServer {
     const port = isProd ? ServerConfig.prod.port : ServerConfig.dev.port
 
     /**
+     * Set a global var to allow us to check if we're server / client side.
+     */
+    global.__SERVER__ = true
+
+    /**
      * Set the app up
      */
     const app: express.Express = express()

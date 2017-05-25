@@ -2,13 +2,14 @@ import * as React from 'react'
 import * as ReactDOMServer from 'react-dom/server'
 import { Provider } from 'react-redux'
 import { Store } from 'redux'
-import { Server, State } from '../../types'
+import * as Transit from 'transit-immutable-js'
+import { Server, State } from '../../../types'
 
 export type HTMLChildren = React.ReactElement<React.Props<Provider>>
 
 export interface HTMLProps extends React.Props<HTML> {
     chunks: Server.IsomorphicChunks
-    store: Store<State.RootState>
+    store: Store<State.RootStateRecord>
 }
 
 export default class HTML extends React.Component<HTMLProps, {}> {
@@ -23,7 +24,7 @@ export default class HTML extends React.Component<HTMLProps, {}> {
         } = this.props
 
         const appString = ReactDOMServer.renderToString((children as HTMLChildren))
-        const stateString = `window.__INITIAL_STATE__ = ${JSON.stringify(store.getState())}`
+        const stateString = `window.__INITIAL_STATE__ = '${Transit.toJSON<State.RootStateRecord>(store.getState())}'`
 
         return (
             <html>

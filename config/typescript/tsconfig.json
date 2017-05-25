@@ -9,13 +9,19 @@
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
-    "allowJs": true
+    "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+        "../../src/types/*"
+      ]
+    }
   },
   "include": [
-    "../../../client/**/*.ts",
-    "../../../client/**/*.tsx",
-    "../../../../node_modules/@types/**/*.d.ts",
-    "../../../types/**/*.d.ts"
+    "../../src/client/**/*.ts",
+    "../../src/client/**/*.tsx",
+    "../../src/types/**/*.d.ts",
+    "../../node_modules/@types/**/*.d.ts"
   ],
   "awesomeTypescriptLoaderOptions": {
     "silent": true,

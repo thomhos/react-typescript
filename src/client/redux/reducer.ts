@@ -1,7 +1,7 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux-immutable'
 import { State } from '../../types'
 import { reducer as weather } from './modules/weather'
 
-export const rootReducer =  combineReducers<State.RootState>({
+export const rootReducer =  combineReducers<State.RootStateRecord>({
     weather,
 })

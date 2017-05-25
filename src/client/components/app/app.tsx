@@ -9,7 +9,7 @@ import { actions as weatherActions, Weather } from '../../redux/modules/weather'
  * Types
  */
 interface StateProps {
-    weather: State.WeatherState
+    weather: State.WeatherStateRecord
 }
 
 interface DispatchProps {
@@ -25,8 +25,7 @@ class App extends React.Component<ComponentProps, any> {
     private componentWillMount() {
         const loc = this.props.match.params.location
 
-        if (!this.props.weather.location[loc]) {
-            console.log('havent got that city m8')
+        if (!this.props.weather.getIn(['location', loc])) {
             this.props.requestWeatherForLocation(loc)
         }
     }
@@ -42,8 +41,8 @@ class App extends React.Component<ComponentProps, any> {
 /**
  * Connect
  */
-function mapStateToProps(state: State.RootState): StateProps {
-    return { weather: state.weather }
+function mapStateToProps(state: State.RootStateRecord): StateProps {
+    return { weather: state.get('weather') }
 }
 
 function mapDispatchToProps<T>(dispatch: Dispatch<T>): DispatchProps {

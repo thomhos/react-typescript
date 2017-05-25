@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Route, RouteComponentProps, Switch } from 'react-router-dom'
 
-import { App } from '../containers'
+import { App } from '../components'
 
 const Routes = ({ location }: RouteComponentProps<any>) => (
     <Switch location={location}>

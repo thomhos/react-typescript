@@ -1,7 +1,7 @@
 import { History } from 'history'
 import { routerMiddleware } from 'react-router-redux'
 import { applyMiddleware, compose, createStore, Middleware, Store } from 'redux'
-import logger from 'redux-logger'
+import { createLogger } from 'redux-logger'
 import createSagaMiddleware, { END } from 'redux-saga'
 import { composeWithDevTools } from 'remote-redux-devtools'
 import { State } from '../../types'
@@ -11,7 +11,7 @@ import { rootSaga } from './saga'
 /* TODO: Fix this! */
 declare var window: any
 
-export function configureStore(defaultState?: State.RootState, history?: History): State.CustomStore {
+export function configureStore(defaultState?: State.RootStateRecord, history?: History): State.CustomStore {
     /**
      * Connect the middlewares
      */
@@ -20,14 +20,15 @@ export function configureStore(defaultState?: State.RootState, history?: History
     const middlewares: Middleware[] = [reduxRouterMiddleware, sagaMiddleware]
 
     /* Add logger ONLY in development */
-    if (process.env.NODE_ENV === `development`) {
-        middlewares.push(logger)
+    if (process.env.NODE_ENV === `development` && !global.__SERVER__) {
+        middlewares.push(createLogger({ collapsed: true }))
     }
 
     /**
      * Create the store
      */
-    const store = createStore(rootReducer, defaultState, composeWithDevTools(
+    const composeEnhancers = global.__SERVER__ ? compose : window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    const store = createStore(rootReducer, defaultState, composeEnhancers(
         applyMiddleware(...middlewares),
     )) as State.CustomStore
 

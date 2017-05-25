@@ -19,7 +19,7 @@ const baseConfig: webpack.Configuration = {
                 test: /\.tsx?$/,
                 loader: 'awesome-typescript-loader',
                 options: {
-                    configFileName: 'config/typescript/client/tsconfig.json',
+                    configFileName: 'config/typescript/tsconfig.json',
                 },
             },
             {
@@ -79,12 +79,9 @@ const baseConfig: webpack.Configuration = {
     ],
 
     resolve: {
-        // alias: {
-        //     common: path.resolve(__dirname, '../../src/common'),
-        //     components: path.resolve(__dirname, '../../src/common/components'),
-        //     config: path.resolve(__dirname, '../../src/config.ts'),
-        //     server: path.resolve(__dirname, '../../src/server'),
-        // },
+        alias: {
+            components: path.resolve(__dirname, '../../src/client/components'),
+        },
         extensions: [
             '.js',
             '.jsx',
