@@ -20,21 +20,23 @@ export function configureStore(defaultState?: State.RootStateRecord, history?: H
     const middlewares: Middleware[] = [reduxRouterMiddleware, sagaMiddleware]
 
     /* Add logger ONLY in development */
-    if (process.env.NODE_ENV === `development` && !global.__SERVER__) {
+    if (process.env.NODE_ENV === `development` && !(global as any).__SERVER__) {
         middlewares.push(createLogger({ collapsed: true }))
     }
 
     /**
      * Create the store
      */
-    const composeEnhancers = global.__SERVER__ ? compose : window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    const composeEnhancers = !(global as any).__SERVER__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+        ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+        : compose
+
     const store = createStore(rootReducer, defaultState, composeEnhancers(
         applyMiddleware(...middlewares),
     )) as State.CustomStore
 
     store.run = sagaMiddleware.run
     store.close = () => store.dispatch(END)
-
 
     /**
      * Run the redux saga

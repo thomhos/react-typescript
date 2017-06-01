@@ -9,21 +9,19 @@ export default function(client: boolean): webpack.Configuration {
                 {
                     include: /node_modules/,
                     use: ExtractTextPlugin.extract({
-                        loader: 'css-loader',
+                        use: 'css-loader',
                     }),
                     test: /\.css$/,
                 },
                 {
                     exclude: /node_modules/,
                     use: ExtractTextPlugin.extract({
-                        loader: 'css-loader?modules&localIndentName=[hash:base64:5]',
+                        use: 'css-loader?modules&localIndentName=[hash:base64:5]',
                     }),
                     test: /\.css$/,
                 },
             ],
         },
-
-
 
         /**
          * Disable replacement of process variables server side
@@ -40,7 +38,6 @@ export default function(client: boolean): webpack.Configuration {
             filename: '[hash].min.js',
             publicPath: '/static/',
         },
-
 
         plugins: [
             new ExtractTextPlugin({

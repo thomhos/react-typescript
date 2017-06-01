@@ -17,7 +17,6 @@ function requestWeatherForLocation(location: string): WeatherActionTypes.Action 
     }
 }
 
-
 function successWeatherForLocation(location: string, weather: { temp: number }): WeatherActionTypes.Action {
     return {
         type: ActionNames.SUCCESS_WEATHER_FOR_LOCATION,

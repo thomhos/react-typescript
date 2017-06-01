@@ -10,7 +10,7 @@ import prodConfig from './config:prod'
 export const universalWebpack = {
     server: {
         input: path.resolve(__dirname, '../../src/server/index.ts'),
-        output: path.resolve(__dirname, '../../build/server.js'),
+        output: path.resolve(__dirname, '../../build/server/index.js'),
     },
 }
 
@@ -28,9 +28,9 @@ export default (config: string = '') => {
     } else {
         configs.push(devConfig)
     }
-    const webpackConfig = webpackMerge(configs)
+    const webpackConfig = webpackMerge.smartStrategy({ entry: 'replace' })(configs)
 
-	/* =======================
+    /* =======================
 		 SET SERVER/CLIENT SIDE
 	======================= */
     switch (env) {

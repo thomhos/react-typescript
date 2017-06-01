@@ -21,15 +21,17 @@ export default function(params: Server.IsomorphicWebpackParams): HttpServer {
     /**
      * Set a global var to allow us to check if we're server / client side.
      */
-    global.__SERVER__ = true
+    if (global) {
+        (global as any).__SERVER__ = true
+    }
 
     /**
      * Set the app up
      */
-    const app: express.Express = express()
+    const app = express()
 
     app.set('port', port)
-    app.use('/static', express.static(path.join(__dirname, 'static')))
+    app.use('/static', express.static(path.join(__dirname, '../static')))
     app.get('*', render(params.chunks()))
 
     return app.listen(app.get('port'), () => {

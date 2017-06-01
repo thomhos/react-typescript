@@ -33,7 +33,7 @@ class App extends React.Component<ComponentProps, any> {
     public render() {
         const route = this.props.match.params.location
         return (
-            <h1>Hello at {route}</h1>
+            <h1>Hello at new {route}</h1>
         )
     }
 }

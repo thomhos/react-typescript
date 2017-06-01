@@ -1,6 +1,9 @@
 import * as CircularDependencyPlugin from 'circular-dependency-plugin'
 import * as path from 'path'
 import * as webpack from 'webpack'
+import { ServerConfig } from '../index'
+
+const port = ServerConfig.dev.port + 1
 
 const baseConfig: webpack.Configuration = {
 
@@ -17,10 +20,10 @@ const baseConfig: webpack.Configuration = {
             {
                 exclude: /node_modules/,
                 test: /\.tsx?$/,
-                loader: 'awesome-typescript-loader',
-                options: {
-                    configFileName: 'config/typescript/tsconfig.json',
-                },
+                loaders: [
+                    'react-hot-loader/webpack',
+                    'awesome-typescript-loader?configFileName=config/typescript/tsconfig.json',
+                ],
             },
             {
                 test: /\.(eot|ttf|woff|woff2)$/,
@@ -76,6 +79,8 @@ const baseConfig: webpack.Configuration = {
             exclude: /a\.js|node_modules/,
             failOnError: false,
         }),
+
+        new webpack.HotModuleReplacementPlugin(),
     ],
 
     resolve: {

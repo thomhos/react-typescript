@@ -1,11 +1,20 @@
+import * as path from 'path'
 import * as webpack from 'webpack'
 import { ServerConfig } from '../index'
 
 const port = ServerConfig.dev.port + 1
 
-const deveConfig: webpack.Configuration = {
+const devConfig: webpack.Configuration = {
 
     devtool: 'inline-source-map',
+
+    entry: {
+        app: [
+            `webpack-hot-middleware/client?path=http://localhost:${port}/__webpack_hmr`,
+            'react-hot-loader/patch',
+            path.resolve(__dirname, '../..', 'src', 'client'),
+        ],
+    },
 
     module: {
         rules: [
@@ -59,4 +68,4 @@ const deveConfig: webpack.Configuration = {
     },
 }
 
-export default deveConfig
+export default devConfig
