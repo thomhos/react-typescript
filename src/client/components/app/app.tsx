@@ -22,7 +22,7 @@ type ComponentProps = StateProps & DispatchProps & RouteComponentProps<any>
  * Class
  */
 class App extends React.Component<ComponentProps, any> {
-    private componentWillMount() {
+    public componentWillMount() {
         const loc = this.props.match.params.location
 
         if (!this.props.weather.getIn(['location', loc])) {
