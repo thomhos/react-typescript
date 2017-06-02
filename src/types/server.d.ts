@@ -39,4 +39,8 @@ export namespace Server {
         params: any;
     }
 
+    interface Context {
+        url?: string
+    }
+
 }

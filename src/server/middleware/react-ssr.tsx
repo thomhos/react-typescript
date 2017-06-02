@@ -9,19 +9,18 @@ import { App, HTML } from '../../client/components'
 import { configureStore } from '../../client/redux/create'
 import { rootSaga } from '../../client/redux/saga'
 import Routes from '../../client/routes'
-import { Server } from '../../types'
+import { Server, State } from '../../types'
 
 
-function renderApp(props: any) {
-    const reactApp = ReactDOMServer.renderToStaticMarkup(
-        <HTML chunks={props.chunks} store={props.store} rootComponent={props.rootComponent} />,
+function renderApp(store: State.CustomStore, chunks: Server.IsomorphicChunks, component: JSX.Element) {
+    return ReactDOMServer.renderToStaticMarkup(
+        <HTML chunks={chunks} store={store} rootComponent={component} />,
     )
-    return reactApp
 }
 
 export default function(chunks: Server.IsomorphicChunks) {
     return (req: Request, res: Response) => {
-        const context: any = {}
+        const context: Server.Context = {}
         const store = configureStore()
 
         const rootComponent = (
@@ -33,7 +32,7 @@ export default function(chunks: Server.IsomorphicChunks) {
         )
 
         store.run(rootSaga).done.then(() => {
-            const result = renderApp({ store, chunks, rootComponent })
+            const result = renderApp(store, chunks, rootComponent)
 
             if (context.url) {
                 res.writeHead(301, {
