@@ -22,7 +22,7 @@ const baseConfig: webpack.Configuration = {
                 test: /\.tsx?$/,
                 loaders: [
                     'react-hot-loader/webpack',
-                    'awesome-typescript-loader?configFileName=config/typescript/tsconfig.json',
+                    'awesome-typescript-loader?configFileName=tsconfig.json',
                 ],
             },
             {

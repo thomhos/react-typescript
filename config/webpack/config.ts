@@ -14,7 +14,7 @@ export const universalWebpack = {
     },
 }
 
-export default (config: string = '') => {
+export default (config: string) => {
     const settings: string[]    = config.split(':')
     const prod: boolean         = settings[0] === 'prod'
     const env: string           = settings[1]

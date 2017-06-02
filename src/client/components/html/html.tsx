@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as ReactDOMServer from 'react-dom/server'
+import { Helmet, HelmetData } from 'react-helmet'
 import { Provider } from 'react-redux'
 import { Store } from 'redux'
 import * as Transit from 'transit-immutable-js'
@@ -8,14 +9,15 @@ import { Server, State } from '../../../types'
 export type HTMLChildren = React.ReactElement<React.Props<Provider>>
 
 export interface HTMLProps extends React.Props<HTML> {
+    rootComponent: HTMLChildren
     chunks: Server.IsomorphicChunks
     store: Store<State.RootStateRecord>
 }
 
-export default class HTML extends React.Component<HTMLProps, {}> {
+export default class HTML extends React.Component<HTMLProps, any> {
     public render(): JSX.Element {
         const {
-            children,
+            rootComponent,
             chunks: {
                 javascript,
                 styles,
@@ -23,16 +25,22 @@ export default class HTML extends React.Component<HTMLProps, {}> {
             store,
         } = this.props
 
-        const appString = ReactDOMServer.renderToString((children as HTMLChildren))
+        const appString = ReactDOMServer.renderToString((rootComponent))
         const stateString = `window.__INITIAL_STATE__ = '${Transit.toJSON<State.RootStateRecord>(store.getState())}'`
 
+        const head = Helmet.rewind()
+        const { children: htmlChildren, ...htmlAttrs } = head.htmlAttributes.toComponent()
+        const { children: bodyChildren, ...bodyAttrs } = head.bodyAttributes.toComponent()
+
         return (
-            <html>
+            <html {...htmlAttrs}>
                 <head>
-                    <title>Default App</title>
+                    {head.title.toComponent()}
+                    {head.meta.toComponent()}
+                    {head.link.toComponent()}
                     <link href={styles.application} rel="stylesheet" />
                 </head>
-                <body>
+                <body {...bodyAttrs}>
                     <div
                         id="app"
                         dangerouslySetInnerHTML={{ __html: appString }}

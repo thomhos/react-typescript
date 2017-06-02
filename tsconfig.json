@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "../../../build",
+    "outDir": "./build",
     "target":"es6",
     "moduleResolution": "node",
     "jsx": "react",
@@ -9,19 +9,18 @@
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
-    "allowJs": true,
-    "baseUrl": ".",
+    "allowJs": false,
+    "baseUrl": "./",
     "paths": {
-      "*": [
-        "../../src/types/*"
-      ]
+      "components": ["src/client/components"]
     }
   },
   "include": [
-    "../../src/client/**/*.ts",
-    "../../src/client/**/*.tsx",
-    "../../src/types/**/*.d.ts",
-    "../../node_modules/@types/**/*.d.ts"
+    "./bin/**/*.ts",
+    "./src/client/**/*.ts",
+    "./src/client/**/*.tsx",
+    "./src/types/**/*.d.ts",
+    "./node_modules/@types/**/*.d.ts"
   ],
   "awesomeTypescriptLoaderOptions": {
     "silent": true,

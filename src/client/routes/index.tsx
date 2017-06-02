@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { Route, RouteComponentProps, Switch } from 'react-router-dom'
 
-import { App } from '../components'
+import { HomePage, NotFound } from '../pages'
 
 const Routes = ({ location }: RouteComponentProps<any>) => (
     <Switch location={location}>
-        <Route key='/' path='/' component={App} exact={true} />
-        <Route key='/:location' path='/:location' component={App} />
+        <Route key='homepage' path='/' component={HomePage} exact={true} />
+        <Route key='notfound' path='*' component={NotFound} />
     </Switch>
 )
 

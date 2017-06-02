@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import * as React from 'react'
 import * as ReactDOMServer from 'react-dom/server'
+import { Helmet } from 'react-helmet'
 import { Provider } from 'react-redux'
 import { StaticRouter } from 'react-router-dom'
 
@@ -12,11 +13,10 @@ import { Server } from '../../types'
 
 
 function renderApp(props: any) {
-    return ReactDOMServer.renderToStaticMarkup(
-        <HTML chunks={props.chunks} store={props.store}>
-            {props.rootComponent}
-        </HTML>,
+    const reactApp = ReactDOMServer.renderToStaticMarkup(
+        <HTML chunks={props.chunks} store={props.store} rootComponent={props.rootComponent} />,
     )
+    return reactApp
 }
 
 export default function(chunks: Server.IsomorphicChunks) {
