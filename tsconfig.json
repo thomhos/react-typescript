@@ -16,11 +16,12 @@
     }
   },
   "include": [
-    "./bin/**/*.ts",
-    "./src/client/**/*.ts",
-    "./src/client/**/*.tsx",
-    "./src/types/**/*.d.ts",
-    "./node_modules/@types/**/*.d.ts"
+    "./bin/*",
+    "./src/**/*",
+    "./config/webpack/*"
+  ],
+  "exclude": [
+    "node_modules"
   ],
   "awesomeTypescriptLoaderOptions": {
     "silent": true,
@@ -39,7 +40,8 @@
         "react"
       ],
       "plugins": [
-        "react-hot-loader/babel"
+        "react-hot-loader/babel",
+        "add-module-exports"
       ]
     }
   }

@@ -1,3 +1,4 @@
+import * as compression from 'compression'
 import * as express from 'express'
 import { Server as HttpServer } from 'http'
 import * as path from 'path'
@@ -31,6 +32,7 @@ export default function(params: Server.IsomorphicWebpackParams): HttpServer {
     const app = express()
 
     app.set('port', port)
+    app.use(compression())
     app.use('/static', express.static(path.join(__dirname, '../static')))
     app.get('*', render(params.chunks()))
 

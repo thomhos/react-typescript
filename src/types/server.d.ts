@@ -17,7 +17,7 @@ export namespace Server {
 
 
     interface IsomorphicStyleChunk {
-        application: string;
+        app: string;
     }
 
     interface IsomorphicJavascriptChunk {

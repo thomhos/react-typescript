@@ -24,6 +24,7 @@ class HomePage extends React.Component<ComponentProps, any> {
                     <meta name="description" content="Welcome" />
                 </Helmet>
                 Hello at homepage
+                <p>Testeee</p>
             </DefaultLayout>
         )
     }

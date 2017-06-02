@@ -29,7 +29,6 @@ export default class HTML extends React.Component<HTMLProps, any> {
         const stateString = `window.__INITIAL_STATE__ = '${Transit.toJSON<State.RootStateRecord>(store.getState())}'`
 
         const head = Helmet.rewind()
-
         // https://github.com/Microsoft/TypeScript/issues/13618#issuecomment-300387407
         const { children: htmlChildren, ...htmlAttrs } = head.htmlAttributes.toComponent()
         const { children: bodyChildren, ...bodyAttrs } = head.bodyAttributes.toComponent()
@@ -40,7 +39,7 @@ export default class HTML extends React.Component<HTMLProps, any> {
                     {head.title.toComponent()}
                     {head.meta.toComponent()}
                     {head.link.toComponent()}
-                    <link href={styles.application} rel="stylesheet" />
+                    <link rel="stylesheet" href={styles.app} />
                 </head>
                 <body {...bodyAttrs}>
                     <div
