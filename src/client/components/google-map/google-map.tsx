@@ -3,8 +3,8 @@ import * as React from 'react'
 
 class GoogleMap extends React.Component<Props, any> {
     public static defaultProps = {
-        center: { lat: 59.95, lng: 30.33 },
-        zoom: 11,
+        center: { lat: 0, lng: 0 },
+        zoom: 1,
     }
 
     public render() {

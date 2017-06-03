@@ -1,11 +1,11 @@
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import * as React from 'react'
 import * as ReactDOMServer from 'react-dom/server'
 import { Helmet } from 'react-helmet'
 import { Provider } from 'react-redux'
 import { StaticRouter } from 'react-router-dom'
 
-import { App, HTML } from '../../client/components'
+import { HTML } from '../../client/components'
 import { configureStore } from '../../client/redux/create'
 import { rootSaga } from '../../client/redux/saga'
 import Routes from '../../client/routes'
@@ -19,7 +19,7 @@ function renderApp(store: State.CustomStore, chunks: Server.IsomorphicChunks, co
 }
 
 export default function(chunks: Server.IsomorphicChunks) {
-    return (req: Request, res: Response) => {
+    return (req: Request, res: Response, next: NextFunction ) => {
         const context: Server.Context = {}
         const store = configureStore()
 

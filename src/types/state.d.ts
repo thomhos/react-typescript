@@ -13,20 +13,72 @@ export namespace State {
         run: any
         close: any
     }
-    
-    interface RootStateRecord extends TypedRecord<RootStateRecord>, RootState {}
+
+    interface RootStateRecord extends TypedRecord<RootStateRecord>, RootState { }
 
     interface RootState {
-        weather: WeatherState
+        locations: LocationsState
     }
 
-    interface WeatherStateRecord extends TypedRecord<WeatherStateRecord>, WeatherState {}
+    type LocationsState = Immutable.Map<string, WaqiData>
 
-    interface WeatherState {
-        location: Immutable.Map<string, WeatherObject>
+    interface WaqiData {
+        status: string
+        data: {
+            aqi: number
+            idx: number
+            attributions: WaqiAttributions
+            city: WaqiCity
+            dominentpol: string
+            iaqi: WaqiPollutants
+            time: {
+                s: string
+                tz: string
+                v: number
+            }
+        }
     }
 
-    interface WeatherObject {
-        temp: number
+    type WaqiAttributions = WaqiAttribution[]
+
+    interface WaqiAttribution {
+        url: string
+        name: string
+    }
+
+    interface WaqiCity {
+        geo: number[]
+        name: string
+        url: string
+    }
+
+    interface WaqiPollutants {
+        co: {
+            v: number
+        }
+        h: {
+            v: number
+        }
+        no2: {
+            v: number
+        }
+        o3: {
+            v: number
+        }
+        p: {
+            v: number
+        }
+        pm10: {
+            v: number
+        }
+        pm25: {
+            v: number
+        }
+        so2: {
+            v: number
+        }
+        t: {
+            v: number
+        }
     }
 }

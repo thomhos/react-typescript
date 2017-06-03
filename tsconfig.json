@@ -12,6 +12,9 @@
     "allowJs": false,
     "baseUrl": "./",
     "paths": {
+      "config": ["config"],
+      "types": ["src/types"],
+      "api": ["src/client/api"],
       "components": ["src/client/components"]
     }
   },

@@ -53,6 +53,7 @@ export default class HTML extends React.Component<HTMLProps, any> {
                 <body {...bodyAttrs}>
                     <div
                         id="app"
+                        className={style.app}
                         dangerouslySetInnerHTML={{ __html: appString }}
                     />
                     <script

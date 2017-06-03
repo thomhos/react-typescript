@@ -1,4 +1,3 @@
-import { App } from 'components'
 import * as React from 'react'
 
 /**
@@ -19,7 +18,6 @@ class DefaultLayout extends React.Component<ComponentProps, any> {
     public render() {
         return (
             <main className={styles.main}>
-                <p>Test</p>
                 {this.props.children}
             </main>
         )

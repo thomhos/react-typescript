@@ -11,7 +11,7 @@ export namespace Server {
     }
 
     interface Config {
-        dev: ServerConfig,
+        dev: ServerConfig
         prod: ServerConfig
     }
 

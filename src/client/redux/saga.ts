@@ -1,9 +1,9 @@
 import { fork } from "redux-saga/effects"
-import { saga as Weather } from "./modules/weather"
+import { saga as Locations } from "./modules/locations"
 
 /**
  * Combine all sagas
  */
 export function* rootSaga() {
-    yield fork(Weather)
+    yield fork(Locations)
 }

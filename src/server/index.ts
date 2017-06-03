@@ -4,8 +4,7 @@ import { Server as HttpServer } from 'http'
 import * as path from 'path'
 import { ServerConfig } from '../../config'
 import { Server } from '../types'
-
-import { render } from './middleware'
+import { router } from './router'
 
 /**
  * Isomorphic webpack uses this function to create the server
@@ -31,12 +30,10 @@ export default function(params: Server.IsomorphicWebpackParams): HttpServer {
      */
     const app = express()
 
-    app.set('port', port)
     app.use(compression())
-    app.use('/static', express.static(path.join(__dirname, '../static')))
-    app.get('*', render(params.chunks()))
+    app.use(router(params.chunks()))
 
-    return app.listen(app.get('port'), () => {
-        console.info('Server started on', app.get('port'))
+    return app.listen(port, () => {
+        console.info('Server started on', port)
     })
 }

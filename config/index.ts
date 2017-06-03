@@ -1,4 +1,9 @@
-import { Server } from '../src/types'
+import { Api, Server } from 'types'
+
+export const ApiConfig: Api.Config = {
+    base: 'http://localhost:3000/api',
+    locations: 'http://localhost:3000/api/locations/',
+}
 
 export const ServerConfig: Server.Config = {
     dev: {
@@ -9,4 +14,8 @@ export const ServerConfig: Server.Config = {
         host: 'localhost',
         port: 8080,
     },
+}
+
+export const WaqiConfig: Api.WaqiConfig = {
+    base: 'https://api.waqi.info',
 }
