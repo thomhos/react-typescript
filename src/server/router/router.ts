@@ -9,7 +9,7 @@ export default (chunks: Server.IsomorphicChunks): express.Router => {
     router.use('/static', express.static(path.join(__dirname, '../static')))
 
     router.use('/api/locations/:location', locations)
-    router.use('*', renderReact(chunks))
+    router.use('/', renderReact(chunks))
 
     return router
 }

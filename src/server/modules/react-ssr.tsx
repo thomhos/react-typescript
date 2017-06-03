@@ -5,17 +5,21 @@ import { Helmet } from 'react-helmet'
 import { Provider } from 'react-redux'
 import { StaticRouter } from 'react-router-dom'
 
+import { Server, State } from 'types'
 import { HTML } from '../../client/components'
 import { configureStore } from '../../client/redux/create'
 import { rootSaga } from '../../client/redux/saga'
 import Routes from '../../client/routes'
-import { Server, State } from '../../types'
 
 
 function renderApp(store: State.CustomStore, chunks: Server.IsomorphicChunks, component: JSX.Element) {
-    return ReactDOMServer.renderToStaticMarkup(
-        <HTML chunks={chunks} store={store} rootComponent={component} />,
-    )
+    try {
+        return ReactDOMServer.renderToStaticMarkup(
+            <HTML chunks={chunks} store={store} rootComponent={component} />,
+        )
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 export default function(chunks: Server.IsomorphicChunks) {
@@ -33,7 +37,6 @@ export default function(chunks: Server.IsomorphicChunks) {
 
         store.run(rootSaga).done.then(() => {
             const result = renderApp(store, chunks, rootComponent)
-
             if (context.url) {
                 res.writeHead(301, {
                     Location: context.url,

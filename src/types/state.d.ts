@@ -22,20 +22,22 @@ export namespace State {
 
     type LocationsState = Immutable.Map<string, WaqiData>
 
-    interface WaqiData {
+    type WaqiResponse = {
         status: string
-        data: {
-            aqi: number
-            idx: number
-            attributions: WaqiAttributions
-            city: WaqiCity
-            dominentpol: string
-            iaqi: WaqiPollutants
-            time: {
-                s: string
-                tz: string
-                v: number
-            }
+        data: WaqiData | string
+    }
+
+    type WaqiData = {
+        aqi: number
+        idx: number
+        attributions: WaqiAttributions
+        city: WaqiCity
+        dominentpol: string
+        iaqi: WaqiPollutants
+        time: {
+            s: string
+            tz: string
+            v: number
         }
     }
 

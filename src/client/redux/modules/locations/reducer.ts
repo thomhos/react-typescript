@@ -15,7 +15,6 @@ function reducer(
 
     case ActionNames.SUCCESS_DATA_FOR_LOCATION:
       const { location, data } = action.payload
-
       return state.setIn([location], data)
 
     default:

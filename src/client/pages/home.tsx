@@ -6,6 +6,7 @@ import { RouteComponentProps } from 'react-router'
 import { ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { State } from 'types'
 import { actions as locationActions, Locations as LocationsActionTypes } from '../redux/modules/locations'
+import { pollutantsByLocation, PollutantsByLocationFunction } from '../redux/modules/locations/selectors'
 
 /**
  * Types
@@ -16,13 +17,17 @@ interface RouterProps {
 
 interface ComponentStateProps {
     locations: State.LocationsState
+    getPollutants: PollutantsByLocationFunction
+    pollutants?: State.WaqiPollutants
 }
 
 interface ComponentDispatchProps {
     requestDataForLocation: ActionCreator<LocationsActionTypes.RequestDataForLocation>
 }
 
-type ComponentProps = ComponentStateProps & ComponentDispatchProps & RouteComponentProps<RouterProps>
+type ComponentOwnProps = RouteComponentProps<RouterProps>
+
+type ComponentProps = ComponentStateProps & ComponentDispatchProps & ComponentOwnProps
 
 /**
  * Class
@@ -30,11 +35,13 @@ type ComponentProps = ComponentStateProps & ComponentDispatchProps & RouteCompon
 class HomePage extends React.Component<ComponentProps, any> {
 
     public componentWillMount() {
-        this.props.requestDataForLocation('amsterdam')
+        const { location } = this.props.match.params
+        this.props.requestDataForLocation(location)
     }
 
     public render() {
-        const data = this.props.locations.get('amsterdam')
+        const { location } = this.props.match.params
+        const data = this.props.locations.get(location)
 
         return (
             <DefaultLayout>
@@ -43,7 +50,8 @@ class HomePage extends React.Component<ComponentProps, any> {
                     <title>Homepage</title>
                     <meta name="description" content="Welcome" />
                 </Helmet>
-                    {data && ( <p>The current index for {data.data.city.name} is {data.data.aqi}</p> )}
+                    {data && ( <p>The current index for {data.city.name} is {data.aqi}</p> )}
+                    {this.props.pollutants && ( <p>The current pm25 is {this.props.pollutants.pm25.v}</p> )}
                 <GoogleMap />
             </DefaultLayout>
         )
@@ -54,8 +62,10 @@ class HomePage extends React.Component<ComponentProps, any> {
  * Connect
  */
 function mapStateToProps(state: State.RootStateRecord): ComponentStateProps {
+    const getPollutantsByLocationSelector = pollutantsByLocation(state)
     return {
-        locations: state.get("locations"),
+        locations: state.get('locations'),
+        getPollutants: getPollutantsByLocationSelector,
     }
 }
 
@@ -63,5 +73,17 @@ function mapDispatchToProps<T>(dispatch: Dispatch<T>): ComponentDispatchProps {
     return bindActionCreators(locationActions, dispatch)
 }
 
-export default connect<ComponentStateProps, ComponentDispatchProps, RouteComponentProps<RouterProps>>(
-    mapStateToProps, mapDispatchToProps)(HomePage)
+function mergeProps(
+    stateProps: ComponentStateProps,
+    dispatchProps: ComponentDispatchProps,
+    ownProps: ComponentOwnProps,
+): ComponentProps {
+    return {
+        ...dispatchProps,
+        ...ownProps,
+        ...stateProps,
+        pollutants: stateProps.getPollutants(ownProps.match.params.location),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(HomePage)

@@ -5,7 +5,7 @@ import { HomePage, NotFound } from '../pages'
 
 const Routes = ({ location }: RouteComponentProps<any>) => (
     <Switch location={location}>
-        <Route key='homepage' path='/' component={HomePage} exact={true} />
+        <Route key='homepage' path='/:location' component={HomePage} exact={true} />
         <Route key='notfound' path='*' component={NotFound} />
     </Switch>
 )
