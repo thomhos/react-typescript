@@ -1,0 +1,43 @@
+/*
+ *  Generate all global level classes
+ */
+generate-classes()
+    .container
+        container($grid-max-width)
+
+    .row
+        row()
+
+    for $value in (1..$grid-columns)
+        .col-s-{$value}
+            column($value, $grid-columns, $grid-gutter)
+        
+        .col-s-offset-{$value}
+            column-offset($value, $grid-columns, $grid-gutter)
+    
+    for $value in (1..$grid-columns)
+        .col-m-{$value}
+            +medium()
+                column($value, $grid-columns, $grid-gutter)
+        
+        .col-m-offset-{$value}
+            +medium()
+                column-offset($value, $grid-columns, $grid-gutter)
+    
+    for $value in (1..$grid-columns)
+        .col-l-{$value}
+            +large()
+                column($value, $grid-columns, $grid-gutter)
+        
+        .col-l-offset-{$value}
+            +large()
+                column-offset($value, $grid-columns, $grid-gutter)
+    
+    for $value in (1..$grid-columns)
+        .col-xl-{$value}
+            +extra-large()
+                column($value, $grid-columns, $grid-gutter)
+        
+        .col-xl-offset-{$value}
+            +extra-large()
+                column-offset($value, $grid-columns, $grid-gutter)

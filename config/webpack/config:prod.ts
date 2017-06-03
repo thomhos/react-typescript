@@ -1,3 +1,4 @@
+import autoprefixer = require('autoprefixer-stylus')
 import * as ExtractTextPlugin from 'extract-text-webpack-plugin'
 import * as webpack from 'webpack'
 
@@ -9,14 +10,14 @@ export default function(client: boolean): webpack.Configuration {
                 {
                     include: /node_modules/,
                     use: ExtractTextPlugin.extract({
-                        use: 'css-loader',
+                        use: ['css-loader', 'stylus-loader'],
                     }),
                     test: /\.css$/,
                 },
                 {
                     exclude: /node_modules/,
                     use: ExtractTextPlugin.extract({
-                        use: 'css-loader?modules&localIndentName=[hash:base64:5]',
+                        use: ['css-loader?modules&localIndentName=[hash:base64:5]', 'stylus-loader'],
                     }),
                     test: /\.css$/,
                 },
@@ -49,6 +50,15 @@ export default function(client: boolean): webpack.Configuration {
                 name: 'common',
             }),
             new webpack.optimize.OccurrenceOrderPlugin(false),
+
+            new webpack.LoaderOptionsPlugin({
+                test: /\.styl?$/,
+                stylus: {
+                    default: {
+                        use: [autoprefixer({ browsers: ["last 2 versions", "ios 8", "ie 10"] })],
+                    },
+                },
+            }),
         ],
     }
 

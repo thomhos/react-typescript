@@ -1,0 +1,27 @@
+/*
+ *  Container for grid system
+ */
+container($maxWidth = 1280px, $gutter = 20px)
+    position: relative
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    flex: 0 0 auto
+
+    width: 100%
+    max-width: $maxWidth
+    
+    margin-left: auto
+    margin-right: auto
+
+    padding-left: ($gutter / 2)
+    padding-right: ($gutter / 2)
+    
+    &--fluid
+        max-width: none
+        padding-left: 0
+        padding-right: 0
+
+    if $grid-debug is true
+        background-color: transparentify(green, 20%)
+        

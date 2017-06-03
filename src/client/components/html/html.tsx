@@ -6,6 +6,9 @@ import { Store } from 'redux'
 import * as Transit from 'transit-immutable-js'
 import { Server, State } from '../../../types'
 
+/**
+ * Types
+ */
 export type HTMLChildren = React.ReactElement<React.Props<Provider>>
 
 export interface HTMLProps extends React.Props<HTML> {
@@ -13,6 +16,12 @@ export interface HTMLProps extends React.Props<HTML> {
     chunks: Server.IsomorphicChunks
     store: Store<State.RootStateRecord>
 }
+
+/**
+ * Style
+ */
+// tslint:disable-next-line:no-var-requires
+const style = require('./html.styl')
 
 export default class HTML extends React.Component<HTMLProps, any> {
     public render(): JSX.Element {

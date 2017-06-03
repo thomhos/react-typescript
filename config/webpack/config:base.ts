@@ -86,6 +86,8 @@ const baseConfig: webpack.Configuration = {
     resolve: {
         alias: {
             components: path.resolve(__dirname, '../../src/client/components'),
+            styleVars: path.resolve(__dirname, '../../src/client/styles/vars'),
+            styleGlobal: path.resolve(__dirname, '../../src/client/styles/global'),
         },
         extensions: [
             '.js',

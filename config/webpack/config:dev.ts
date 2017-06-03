@@ -1,3 +1,4 @@
+import autoprefixer = require('autoprefixer-stylus')
 import * as path from 'path'
 import * as webpack from 'webpack'
 import { ServerConfig } from '../index'
@@ -33,7 +34,7 @@ const devConfig: webpack.Configuration = {
             },
             {
                 exclude: /node_modules/,
-                test: /\.css$/,
+                test: /\.styl$/,
                 use: [
                     { loader: 'style-loader' },
                     {
@@ -44,6 +45,7 @@ const devConfig: webpack.Configuration = {
                             sourceMap: true,
                         },
                     },
+                    { loader: 'stylus-loader' },
                 ],
             },
         ],
@@ -53,6 +55,16 @@ const devConfig: webpack.Configuration = {
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify('development'),
+            },
+        }),
+
+        new webpack.LoaderOptionsPlugin({
+            test: /\.styl?$/,
+            stylus: {
+                default: {
+                    use: [autoprefixer({ browsers: ["last 2 versions", "ios 8", "ie 10"] })],
+                    preferPathResolver: 'webpack',
+                },
             },
         }),
     ],

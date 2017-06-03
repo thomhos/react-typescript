@@ -1,0 +1,20 @@
+/*
+ *  Columns
+ */
+column($i = 1, $cols = 12, $gutter = 20px)
+    flex-basis: s('calc(100% * %s - %s)', $i / $cols, $gutter)
+    min-width 0 // FF adjustment for responsive images
+
+    margin-left: ($gutter / 2)
+    margin-right: ($gutter / 2)
+    margin-top: $gutter
+    
+    [class*="col-"]
+        margin-top: 0
+        margin-bottom: $gutter
+
+    if $debug is true
+        background-color: transparentify(red, 20%)
+
+column-offset($i = 1, $cols = 12, $gutter = 20px)
+    margin-left: s('calc(100% * %s + %s)', $i / $cols, ($gutter/2)) !important
