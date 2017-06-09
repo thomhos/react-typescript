@@ -1,41 +1,70 @@
-import { State } from '../../../../types'
-import { Locations as LocationsActionTypes } from './action-types'
+import { Action, ActionCreator } from 'redux'
+import { State } from 'types'
+import { createActionCreator, stringEnum } from 'utils'
 
-export const ActionNames = {
-    // tslint:disable-next-line:max-line-length
-    REQUEST_DATA_FOR_LOCATION: 'weather_REQUEST_DATA_FOR_LOCATION' as LocationsActionTypes.REQUEST_DATA_FOR_LOCATION,
-    // tslint:disable-next-line:max-line-length
-    SUCCESS_DATA_FOR_LOCATION: 'weather_SUCCESS_DATA_FOR_LOCATION' as LocationsActionTypes.SUCCESS_DATA_FOR_LOCATION,
-    // tslint:disable-next-line:max-line-length
-    FAILURE_DATA_FOR_LOCATION: 'weather_FAILURE_DATA_FOR_LOCATION' as LocationsActionTypes.FAILURE_DATA_FOR_LOCATION,
-}
+/**
+ * Action names
+ */
+export const ActionNames = stringEnum([
+    'weather_REQUEST_DATA_FOR_LOCATION',
+    'weather_SUCCESS_DATA_FOR_LOCATION',
+    'weather_FAILURE_DATA_FOR_LOCATION',
+])
 
-function requestDataForLocation(location: string): LocationsActionTypes.RequestDataForLocation {
-    return {
-        type: ActionNames.REQUEST_DATA_FOR_LOCATION,
-        payload: location,
+export type ActionNames = keyof typeof ActionNames
+
+/**
+ * Actions
+ */
+// tslint:disable-next-line:no-namespace
+export namespace Actions {
+    /**
+     * Request action
+     */
+    export interface RequestDataForLocationPayload {
+        location: string
     }
-}
 
-function successDataForLocation(location: string, data: State.WaqiData): LocationsActionTypes.SuccessDataForLocation {
-    return {
-        type: ActionNames.SUCCESS_DATA_FOR_LOCATION,
-        payload: {
-            location,
-            data,
-        },
+    export type RequestDataForLocationAction = State.ReduxAction<
+        typeof ActionNames.weather_REQUEST_DATA_FOR_LOCATION,
+        RequestDataForLocationPayload>
+
+    /**
+     * Success action
+     */
+    export interface SuccessDataForLocationPayload {
+        location: string,
+        data: State.WaqiData
     }
-}
 
-function failureDataForLocation(error: Error): LocationsActionTypes.FailureDataForLocation {
-    return {
-        type: ActionNames.FAILURE_DATA_FOR_LOCATION,
-        payload: error,
+    export type SuccessDataForLocationAction = State.ReduxAction<
+        typeof ActionNames.weather_SUCCESS_DATA_FOR_LOCATION,
+        SuccessDataForLocationPayload>
+
+    /**
+     * Failure action
+     */
+    export interface FailureDataForLocationPayload {
+        error: Error
     }
+
+    export type FailureDataForLocationAction = State.ReduxAction<
+        typeof ActionNames.weather_FAILURE_DATA_FOR_LOCATION,
+        FailureDataForLocationPayload>
 }
 
-export default {
-    requestDataForLocation,
-    successDataForLocation,
-    failureDataForLocation,
+/**
+ * Export all actions
+ */
+export type Actions = Actions.RequestDataForLocationAction
+    | Actions.SuccessDataForLocationAction
+    | Actions.FailureDataForLocationAction
+
+export const ActionCreators = {
+    // tslint:disable-next-line:max-line-length
+    requestDataForLocation: createActionCreator<typeof ActionNames.weather_REQUEST_DATA_FOR_LOCATION, Actions.RequestDataForLocationPayload>(ActionNames.weather_REQUEST_DATA_FOR_LOCATION),
+    // tslint:disable-next-line:max-line-length
+    successDataForLocation: createActionCreator<typeof ActionNames.weather_SUCCESS_DATA_FOR_LOCATION, Actions.SuccessDataForLocationPayload>(ActionNames.weather_SUCCESS_DATA_FOR_LOCATION),
+    // tslint:disable-next-line:max-line-length
+    failureDataForLocation: createActionCreator<typeof ActionNames.weather_FAILURE_DATA_FOR_LOCATION, Actions.FailureDataForLocationPayload>(ActionNames.weather_FAILURE_DATA_FOR_LOCATION),
 }

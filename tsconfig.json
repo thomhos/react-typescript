@@ -14,6 +14,7 @@
     "paths": {
       "config": ["config"],
       "types": ["src/types"],
+      "utils": ["src/utils"],
       "api": ["src/client/api"],
       "components": ["src/client/components"]
     }

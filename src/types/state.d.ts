@@ -1,8 +1,14 @@
 import * as Immutable from 'immutable'
-import { Store } from 'redux'
+import { Action, Store } from 'redux'
 import { TypedRecord } from 'typed-immutable-record'
 
 export namespace State {
+
+    interface ReduxAction<T, P> extends Action {
+        type: T,
+        payload?: P
+    }
+
     /**
      *  The RootRecord has the methods we need to get properties off it. 
      *  We need to use redux-immutable to be able to implement the redux store as an immutable Map.

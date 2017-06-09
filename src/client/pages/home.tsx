@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 import { RouteComponentProps } from 'react-router'
 import { ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { State } from 'types'
-import { actions as locationActions, Locations as LocationsActionTypes } from '../redux/modules/locations'
-import { pollutantsByLocation, PollutantsByLocationFunction } from '../redux/modules/locations/selectors'
+import { ActionCreators, ActionNames, Actions } from '../redux/modules/locations/actions'
+import { makePollutantsByLocationSelector } from '../redux/modules/locations/selectors'
 
 /**
  * Types
@@ -17,12 +17,11 @@ interface RouterProps {
 
 interface ComponentStateProps {
     locations: State.LocationsState
-    getPollutants: PollutantsByLocationFunction
     pollutants?: State.WaqiPollutants
 }
 
 interface ComponentDispatchProps {
-    requestDataForLocation: ActionCreator<LocationsActionTypes.RequestDataForLocation>
+    requestDataForLocation: ActionCreator<Actions.RequestDataForLocationAction>
 }
 
 type ComponentOwnProps = RouteComponentProps<RouterProps>
@@ -36,7 +35,7 @@ class HomePage extends React.Component<ComponentProps, any> {
 
     public componentWillMount() {
         const { location } = this.props.match.params
-        this.props.requestDataForLocation(location)
+        this.props.requestDataForLocation({ location })
     }
 
     public render() {
@@ -61,29 +60,16 @@ class HomePage extends React.Component<ComponentProps, any> {
 /**
  * Connect
  */
-function mapStateToProps(state: State.RootStateRecord): ComponentStateProps {
-    const getPollutantsByLocationSelector = pollutantsByLocation(state)
+function mapStateToProps(state: State.RootStateRecord, ownProps: ComponentOwnProps): ComponentStateProps {
+    const pollutantsByLocationSelector = makePollutantsByLocationSelector(state)
     return {
         locations: state.get('locations'),
-        getPollutants: getPollutantsByLocationSelector,
+        pollutants: pollutantsByLocationSelector(ownProps.match.params.location),
     }
 }
 
 function mapDispatchToProps<T>(dispatch: Dispatch<T>): ComponentDispatchProps {
-    return bindActionCreators(locationActions, dispatch)
+    return bindActionCreators(ActionCreators, dispatch)
 }
 
-function mergeProps(
-    stateProps: ComponentStateProps,
-    dispatchProps: ComponentDispatchProps,
-    ownProps: ComponentOwnProps,
-): ComponentProps {
-    return {
-        ...dispatchProps,
-        ...ownProps,
-        ...stateProps,
-        pollutants: stateProps.getPollutants(ownProps.match.params.location),
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(HomePage)
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage)
